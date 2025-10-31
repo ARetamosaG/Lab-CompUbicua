@@ -98,19 +98,30 @@ void callback(char* topic, byte* message, unsigned int length) {
     currentState = RED;
     applyOutputs(RED);
     publishTrafficLightState(true);
+    client.loop();
     delay(5000);
   } 
   else if (msg == "green") {
     currentState = GREEN;
     applyOutputs(GREEN);
     publishTrafficLightState(true);
+    client.loop();
     delay(5000);
   } 
   else if (msg == "yellow") {
     currentState = YELLOW;
     applyOutputs(YELLOW);
     publishTrafficLightState(true);
+    client.loop();
     delay(5000);
+  }else if(msg =="Night_mode"){
+     DURATION_GREEN  = 0;
+     DURATION_YELLOW = 1;
+     DURATION_RED    = 0;
+  }else if(msg =="Day_mode"){
+     DURATION_GREEN  = 10;
+     DURATION_YELLOW = 2;
+     DURATION_RED    = 10;
   }
   else {
     Serial.println("La orden no fue interpretada");
@@ -362,7 +373,7 @@ void updateStateMachine() {
 
   switch (currentState) {
     case GREEN:
-      if (elapsed >= DURATION_GREEN) { // Cuando el tiempo transcurrido pasa el maximo, cambiamos de estado
+      if (elapsed >= DURATION_GREEN ) { // Cuando el tiempo transcurrido pasa el maximo, cambiamos de estado
         currentState = YELLOW;
         stateStartMillis = millis();
         changed = true;
@@ -429,7 +440,6 @@ void setup() {
   lastStateChangeISO = nowISO();
   client.setServer(mqtt_server, mqtt_port); // Iniciamos el Broker (MQTT) con su puerto
   client.setCallback(callback);             // Para 
-
   stateStartMillis = millis();           // Marca inicio del estado inicial
 }
 
