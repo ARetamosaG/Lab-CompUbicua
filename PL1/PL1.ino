@@ -199,13 +199,13 @@ digitalWrite(PIN_YELLOW, LOW);
 digitalWrite(PIN_RED, LOW);
 
 // Encender solo el que corresponda al estado actual
-if (s == GREEN) {
+if (s == GREEN && DURATION_GREEN == 0) {
   digitalWrite(PIN_GREEN, HIGH);
 }
 else if (s == YELLOW) {
   digitalWrite(PIN_YELLOW, HIGH);
 }
-else if (s == RED) {
+else if (s == RED && DURATION_RED == 0) {
   digitalWrite(PIN_RED, HIGH);
 }
 
@@ -373,7 +373,7 @@ void updateStateMachine() {
 
   switch (currentState) {
     case GREEN:
-      if (elapsed >= DURATION_GREEN ) { // Cuando el tiempo transcurrido pasa el maximo, cambiamos de estado
+      if (elapsed >= DURATION_GREEN) { // Cuando el tiempo transcurrido pasa el maximo, cambiamos de estado
         currentState = YELLOW;
         stateStartMillis = millis();
         changed = true;
