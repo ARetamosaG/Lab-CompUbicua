@@ -373,7 +373,7 @@ void updateStateMachine() {
 
   switch (currentState) {
     case GREEN:
-      if (elapsed >= DURATION_GREEN && DURATION_RED != 0) { // Cuando el tiempo transcurrido pasa el maximo, cambiamos de estado
+      if (elapsed >= DURATION_GREEN) { // Cuando el tiempo transcurrido pasa el maximo, cambiamos de estado
         currentState = YELLOW;
         stateStartMillis = millis();
         changed = true;
@@ -387,7 +387,7 @@ void updateStateMachine() {
       }
       break;
     case RED:
-      if (elapsed >= DURATION_RED && DURATION_RED != 0) {
+      if (elapsed >= DURATION_RED) {
         currentState = GREEN;
         stateStartMillis = millis();
         changed = true;
